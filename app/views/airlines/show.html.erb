@@ -1,0 +1,9 @@
+<h1><%= @airline.name %></h1>
+<p><strong>Country:</strong> <%= @airline.country %> | <strong>IATA/ICAO:</strong> <%= @airline.iata %>/<%= @airline.icao %></p>
+
+<h3>Airports served</h3>
+<ul>
+  <% @served.each do |ap| %>
+    <li><%= link_to "#{ap.city}, #{ap.country} (#{ap.name})", ap %></li>
+  <% end %>
+</ul>
