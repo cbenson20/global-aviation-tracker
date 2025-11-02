@@ -1,0 +1,15 @@
+<h1>Routes</h1>
+<table class="table table-striped">
+  <thead><tr><th>Airline</th><th>From</th><th>To</th><th>Stops</th></tr></thead>
+  <tbody>
+    <% @routes.each do |r| %>
+      <tr>
+        <td><%= link_to r.airline.name, r.airline %></td>
+        <td><%= link_to r.source_airport.name, r.source_airport %></td>
+        <td><%= link_to r.dest_airport.name,   r.dest_airport %></td>
+        <td><%= r.stops %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @routes %>
