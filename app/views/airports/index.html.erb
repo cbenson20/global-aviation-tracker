@@ -1,0 +1,35 @@
+<h1>Airports</h1>
+
+<form class="row g-2 mb-3">
+  <div class="col-md-6">
+    <input class="form-control" type="search" name="q" value="<%= @q %>" placeholder="Search name, city, country, IATA, ICAO">
+  </div>
+  <div class="col-md-4">
+    <select class="form-select" name="country">
+      <option value="">All countries</option>
+      <% @countries.each do |c| %>
+        <option value="<%= c %>" <%= "selected" if c == @country %>><%= c %></option>
+      <% end %>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-primary w-100">Search</button>
+  </div>
+</form>
+
+<table class="table table-striped">
+  <thead><tr><th>Name</th><th>City</th><th>Country</th><th>IATA</th><th>ICAO</th></tr></thead>
+  <tbody>
+    <% @airports.each do |a| %>
+      <tr>
+        <td><%= link_to a.name, a %></td>
+        <td><%= a.city %></td>
+        <td><%= a.country %></td>
+        <td><%= a.iata %></td>
+        <td><%= a.icao %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @airports %>

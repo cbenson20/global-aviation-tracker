@@ -1,0 +1,30 @@
+<h1><%= @airport.name %></h1>
+<p><strong>City:</strong> <%= @airport.city %> | <strong>Country:</strong> <%= @airport.country %></p>
+<p><strong>IATA:</strong> <%= @airport.iata %> | <strong>ICAO:</strong> <%= @airport.icao %></p>
+
+<div id="map" style="height: 360px;" class="mb-3"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    var lat = <%= @airport.latitude || 0 %>;
+    var lon = <%= @airport.longitude || 0 %>;
+    var map = L.map('map').setView([lat, lon], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OSM' }).addTo(map);
+    if(lat && lon){
+      L.marker([lat, lon]).addTo(map).bindPopup("<%= j @airport.name %>");
+    }
+  });
+</script>
+
+<h3>Airlines serving this airport</h3>
+<ul>
+  <% @airlines.each do |al| %>
+    <li><%= link_to al.name, al %></li>
+  <% end %>
+</ul>
+
+<h3>Top destinations from here</h3>
+<ul>
+  <% @destinations.each do |dst| %>
+    <li><%= link_to "#{dst.city}, #{dst.country} (#{dst.name})", dst %></li>
+  <% end %>
+</ul>
