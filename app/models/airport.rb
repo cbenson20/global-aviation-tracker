@@ -9,6 +9,7 @@ class Airport < ApplicationRecord
   has_many :airlines_via_dest,   through: :dest_routes,   source: :airline
 
   validates :name, :city, :country, presence: true
+  validates :country, presence: true
   validates :iata, length: { is: 3 }, allow_blank: true
   validates :icao, length: { is: 4 }, allow_blank: true
   validates :latitude,  numericality: { greater_than: -90,  less_than: 90  }, allow_nil: true
