@@ -1,13 +1,46 @@
-<div class="p-3">
-  <h1>Global Aviation Tracker</h1>
-  <p class="lead">
-    The Global Aviation Tracker is a Ruby on Rails application that collects and displays aviation data,
-    airports, airlines, and flight routes, from the OpenFlights public dataset.
-    It lets users browse, search, and filter airports and airlines, view route connections, and
-    visualize locations on an interactive map.
-  </p>
+<div class="container-fluid p-0">
+  <div class="hero-section d-flex align-items-center text-center text-white">
+    <div class="overlay"></div>
+    <div class="container position-relative">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-sm-12 col-lg-6">
+          <h1 class="display-3 fw-bold mb-3">Global Aviation Tracker </h1>
+          <p class="lead mb-4">
+            Explore airports, airlines, and flight routes across the world.
+            Search, filter, and visualize real flight connections on a dynamic map.
+          </p>
+          <a href="/airports" class="btn btn-light btn-lg text-primary fw-semibold px-4 py-2 shadow-sm">
+            Explore Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <p>
-    <a class="btn btn-primary" href="/airports">Explore Airports</a>
-  </p>
+<section class="container my-5">
+  <div class="row text-center">
+    <div class="col-md-4 mb-4">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h4 class="text-primary mb-3"> Airports</h4>
+        <p>View details about global airports, including city, country, and IATA/ICAO codes.</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h4 class="text-primary mb-3">Airlines</h4>
+        <p>Explore airlines operating around the world with their active routes and countries.</p>
+      </div>
+    </div>
+    <div class="col-md-4 mb-4">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h4 class="text-primary mb-3">Routes</h4>
+        <p>Discover how airports connect across continents and visualize them on a map.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="text-center text-muted mb-5">
+  <p>Built with <strong>Ruby on Rails</strong> + <strong>Bootstrap 5</strong> | Data Source: <em>OpenFlights</em></p>
 </div>

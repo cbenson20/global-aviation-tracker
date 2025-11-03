@@ -1,24 +1,25 @@
-<h1>About</h1>
-<p>
-  This app uses <strong>OpenFlights</strong> datasets (CSV): <em>airports</em>, <em>airlines</em>, and <em>routes</em>.
-  Data is imported via <code>db/seeds.rb</code> into a normalized schema.
-</p>
+<div class="container mt-4">
+  <h1 class="mb-3 text-primary">About This Project</h1>
+  <p class="lead">
+    The <strong>Global Aviation Tracker</strong> is a Ruby on Rails app built to showcase worldwide aviation data.
+    It integrates the <em>OpenFlights</em> public datasets : airports, airlines, and routes,  into an interactive, searchable interface.
+  </p>
 
-<h3>Datasets</h3>
-<ul>
-  <li><strong>airports.csv</strong> — name, city, country, IATA, ICAO, latitude, longitude</li>
-  <li><strong>airlines.csv</strong> — name, IATA/ICAO, country, active</li>
-  <li><strong>routes.csv</strong> — airline, source airport, destination airport, stops</li>
-</ul>
+  <hr>
 
-<h3>Relationships</h3>
-<p>
-  <strong>Airline</strong> has many <strong>Routes</strong>. Each <strong>Route</strong> links a
-  <strong>source Airport</strong> to a <strong>destination Airport</strong>. This creates a many-to-many
-  between Airlines and Airports, and a self-referential many-to-many among Airports.
-</p>
+  <h3 class="mt-4 text-secondary">Datasets</h3>
+  <ul class="list-group mb-3">
+    <li class="list-group-item">airports.csv — name, city, country, IATA, ICAO, latitude, longitude</li>
+    <li class="list-group-item">airlines.csv — name, IATA/ICAO, country, active</li>
+    <li class="list-group-item">routes.csv — airline, source airport, destination airport, stops</li>
+  </ul>
 
-<p>Pages include collection lists, show pages with associated data, search & filters, pagination, and an interactive map on airport pages.</p>
+  <h3 class="text-secondary">Relationships</h3>
+  <p>
+    <strong>Airline</strong> has many <strong>Routes</strong>, each linking a
+    <strong>source Airport</strong> to a <strong>destination Airport</strong>.
+    This forms a many-to-many relationship between Airlines and Airports.
+  </p>
 
-<!-- Optional ERD image if you add one at app/assets/images/erd.png -->
-<!-- <img src="/assets/erd.png" alt="ERD"> -->
+  <p class="mt-4 text-muted">Built with in Rails using Bootstrap and Leaflet.js for mapping.</p>
+</div>

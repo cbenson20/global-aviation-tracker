@@ -1,71 +1,58 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
 require "csv"
 
-def load_csv(name)
-  CSV.read(Rails.root.join("db", "seed_data", name), headers: false)
+AIRPORTS_FILE = Rails.root.join("db/seed_data/airports.csv")
+AIRLINES_FILE = Rails.root.join("db/seed_data/airlines.csv")
+ROUTES_FILE   = Rails.root.join("db/seed_data/routes.csv")
+
+puts "Seeding airports..."
+CSV.foreach(AIRPORTS_FILE, headers: false) do |row|
+  Airport.create!(
+    openflights_id: row[0],
+    name: row[1],
+    city: row[2],
+    country: row[3],
+    iata: row[4],
+    icao: row[5],
+    latitude: row[6],
+    longitude: row[7],
+    altitude: row[8],
+    timezone: row[9],
+    dst: row[10],
+    tz: row[11]
+  ) rescue nil
 end
 
-puts "Seeding..."
-ActiveRecord::Base.transaction do
-  Route.delete_all
-  Airline.delete_all
-  Airport.delete_all
-
-  # AIRPORTS: id, name, city, country, IATA, ICAO, lat, lon, ...
-  load_csv("airports.csv").each do |r|
-    Airport.create!(
-      openflights_id: r[0].to_i,
-      name:     r[1],
-      city:     r[2],
-      country:  r[3],
-      iata:     (r[4] unless r[4] == "\\N"),
-      icao:     (r[5] unless r[5] == "\\N"),
-      latitude:  (r[6].to_f unless r[6] == "\\N"),
-      longitude: (r[7].to_f unless r[7] == "\\N")
-    )
-  end
-  puts "Airports: #{Airport.count}"
-
-  # AIRLINES: id, name, alias, IATA, ICAO, callsign, country, active
-  load_csv("airlines.csv").each do |r|
-    Airline.create!(
-      openflights_id: r[0].to_i,
-      name:     r[1],
-      iata:     (r[3] unless r[3] == "\\N"),
-      icao:     (r[4] unless r[4] == "\\N"),
-      callsign: (r[5] unless r[5] == "\\N"),
-      country:  (r[6] unless r[6] == "\\N"),
-      active:   (r[7] unless r[7] == "\\N")
-    )
-  end
-  puts "Airlines: #{Airline.count}"
-
-  # ROUTES: airline_code, airline_id, src_code, src_id, dst_code, dst_id, codeshare, stops, equipment
-  load_csv("routes.csv").each do |r|
-    airline = Airline.find_by(openflights_id: r[1].to_i)
-    src     = Airport.find_by(openflights_id: r[3].to_i)
-    dst     = Airport.find_by(openflights_id: r[5].to_i)
-    next unless airline && src && dst
-
-    Route.create!(
-      openflights_id: nil,
-      airline: airline,
-      source_airport: src,
-      dest_airport:   dst,
-      codeshare: (r[6] unless r[6] == "\\N"),
-      stops:     (Integer(r[7]) rescue 0),
-      equipment: r[8]
-    )
-  end
-  puts "Routes: #{Route.count}"
+puts "Seeding airlines..."
+CSV.foreach(AIRLINES_FILE, headers: false) do |row|
+  Airline.create!(
+    openflights_id: row[0],
+    name: row[1],
+    alias: row[2],
+    iata: row[3],
+    icao: row[4],
+    callsign: row[5],
+    country: row[6],
+    active: row[7]
+  ) rescue nil
 end
-puts "Done."
+
+puts "Seeding routes..."
+CSV.foreach(ROUTES_FILE, headers: false) do |row|
+  airline = Airline.find_by(openflights_id: row[1])
+  src_airport = Airport.find_by(openflights_id: row[3])
+  dst_airport = Airport.find_by(openflights_id: row[5])
+
+  next unless airline && src_airport && dst_airport
+
+  Route.create!(
+    openflights_id: row[0],
+    airline: airline,
+    source_airport: src_airport,
+    dest_airport: dst_airport,
+    codeshare: row[6],
+    stops: row[7],
+    equipment: row[8]
+  ) rescue nil
+end
+
+puts " Done seeding!"
