@@ -1,24 +1,4 @@
-# README
+# Global Aviation Tracker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+A Rails project that visualizes airports, airlines, and routes using open-flight data.
+Built with ActiveRecord associations, Bootstrap layout, and search/pagination features."
